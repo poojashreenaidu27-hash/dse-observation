@@ -1,0 +1,25 @@
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+
+df = pd.read_csv('data/diabetes.csv')
+print("First 5 rows:")
+print(df.head())
+
+X = df[['Glucose', 'BloodPressure']].values       # two inputs = multiple regression
+y = df['Age']                                     # value to predict
+
+regr = LinearRegression()
+regr.fit(X, y)                                    # train the model
+
+predicted_age = regr.predict([[150, 85]])         # predict for a new patient
+print("Predicted Age for Glucose=150, BloodPressure=85:", predicted_age)
+print("Coefficients:", regr.coef_)                # one coefficient for each input
+print("Intercept:", regr.intercept_)
+print("R² Score:", r2_score(y, regr.predict(X)))  # R² near 1 = good fit
+
+# Task 1: Predict age for Glucose=120, BloodPressure=80
+print(regr.predict([[120, 80]]))
+
+# Task 2: Predict age for Glucose=100, BloodPressure=70
+print(regr.predict([[100, 70]]))

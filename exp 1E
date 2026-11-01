@@ -1,0 +1,29 @@
+import pandas as pd
+
+# DataFrame from a list of dictionaries, with row labels
+data = [{'Name': 'Arun', 'Marks': 85},
+        {'Name': 'Bala', 'Marks': 72},
+        {'Name': 'Chitra', 'Marks': 90}]
+df = pd.DataFrame(data, index=['s1', 's2', 's3'])     # index = row labels
+print(df)
+
+# Append (add) a new row and a new column
+# Task 1: Changed ['Divya', 78] to ['Divya', 95]
+df.loc['s4'] = ['Divya', 95]                          # add a new row with label s4
+df['Bonus'] = df['Marks'] + 5                         # new column from an old column
+print("After adding a row and a column:")
+print(df)
+
+# Slicing rows
+print("Rows 2 to 3:")
+print(df[1:3])                                        # rows 1 and 2 (end is not included)
+
+# Delete a row by its index label
+df = df.drop('s2')                                    # delete the row with label s2
+print("After deleting s2:")
+print(df)
+
+# Iris: load the CSV file and display only Iris-virginica
+# Task 2: Changed 'Iris-setosa' to 'Iris-virginica'
+iris = pd.read_csv('data/iris.csv')
+print(iris[iris['species'] == 'Iris-virginica'].head())  # keep rows where condition is True

@@ -1,0 +1,17 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data = pd.read_csv('data/diabetes.csv')
+
+plt.figure(figsize=(8, 5))
+# Task 1 & Task 2: Changed bins=20 to bins=10 and color='orange' to color='red'
+data['Glucose'].plot(kind='hist', bins=10, color='red', edgecolor='black')  # bins = number of bars
+plt.title('Histogram of Glucose')
+plt.xlabel('Glucose'); plt.ylabel('Frequency')
+plt.grid(True); plt.show()
+
+plt.figure(figsize=(8, 5))
+plt.hist(data['Age'], bins=15, color='teal', edgecolor='black')  # histogram using plt.hist
+plt.title('Histogram of Age')
+plt.xlabel('Age'); plt.ylabel('Frequency')
+plt.grid(True); plt.show()

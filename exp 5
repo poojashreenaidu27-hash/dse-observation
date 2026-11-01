@@ -1,0 +1,34 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+
+# ----- Plot 1: Globe (Blue Marble, centered on India) -----
+plt.figure(figsize=(8, 8))
+m = Basemap(projection="ortho", resolution=None, lat_0=20, lon_0=78)  # globe view centred at lat, lon
+m.bluemarble(scale=0.5)                                       # NASA earth image
+plt.title('Globe - Blue Marble (centered on India)')
+plt.show()
+
+# ----- Plot 2: Lambert Conformal with ETOPO Relief -----
+fig = plt.figure(figsize=(8, 8))
+m = Basemap(projection="lcc", resolution=None,
+            width=8E6, height=8E6, lat_0=20.59, lon_0=78.96)
+m.etopo(scale=0.5, alpha=0.5)                                 # relief (mountains, sea depth)
+
+x, y = m(80.03, 13.02)                                        # longitude, latitude to map x, y
+plt.plot(x, y, 'ok', markersize=5)
+# Task 2: Changed fontsize=12 to fontsize=16
+plt.text(x, y, '  DMI (Chennai)', fontsize=16, color='red')
+plt.title('India Map with DMI Location (ETOPO Relief)')
+plt.show()
+
+# ----- Plot 3: Coastlines + Countries + Continents -----
+fig = plt.figure(figsize=(8, 8))
+m = Basemap(projection="ortho", resolution='l', lat_0=13.02, lon_0=80.03)
+m.drawcoastlines(linewidth=0.5)
+m.drawcountries(linewidth=0.5)
+# Task 1: Changed color='coral' to color='lightgreen'
+m.fillcontinents(color='lightgreen', lake_color='aqua')       # colour the land lightgreen
+m.drawmapboundary(fill_color='aqua')
+plt.title('India-centered Globe with Coastlines')
+plt.show()

@@ -1,0 +1,32 @@
+%matplotlib inline
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.array([1, 2, 3, 4, 5])
+# Task 2: Changed [10, 15, 7, 20, 12] to [5, 10, 15, 20, 25]
+y = np.array([5, 10, 15, 20, 25])
+
+# 1. Line plot
+plt.figure(figsize=(7, 4))
+# Task 1: Changed color='blue' to color='red'
+plt.plot(x, y, color='red', marker='o', linewidth=2, label='y values')  # line plot of y against x
+plt.title('Line Plot'); plt.xlabel('X'); plt.ylabel('Y')
+plt.grid(True); plt.legend(); plt.show()
+
+# 2. Bar chart
+plt.figure(figsize=(7, 4))
+plt.bar(x, y, color='green', edgecolor='black')               # bar chart
+plt.title('Bar Chart'); plt.xlabel('X'); plt.ylabel('Y')
+plt.show()
+
+# 3. Scatter plot
+plt.figure(figsize=(7, 4))
+plt.scatter(x, y, color='red', s=100, marker='*')             # scatter plot; s = point size
+plt.title('Scatter Plot'); plt.xlabel('X'); plt.ylabel('Y')
+plt.grid(True); plt.show()
+
+# 4. Pie chart
+plt.figure(figsize=(6, 6))
+labels = ['A', 'B', 'C', 'D', 'E']
+plt.pie(y, labels=labels, autopct='%1.1f%%', startangle=90)   # autopct shows % on each slice
+plt.title('Pie Chart'); plt.show()

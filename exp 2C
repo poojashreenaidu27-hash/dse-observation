@@ -1,0 +1,43 @@
+import pandas as pd
+from pandas import DataFrame
+from sklearn.datasets import load_iris
+
+iris_obj = load_iris()                                         # built-in Iris data set
+iris = DataFrame(iris_obj.data, columns=iris_obj.feature_names)  # data into a table
+iris['species'] = iris_obj.target                             # add flower type column (0, 1, 2)
+
+print("Iris dataset (first 5 rows):")
+print(iris.head())
+print("Feature names:", iris_obj.feature_names)
+
+print("Count:")
+print(iris.count())
+print("Mean:")
+print(iris.mean(numeric_only=True))                           # only number columns
+print("Median:")
+print(iris.median(numeric_only=True))
+print("Variance:")
+print(iris.var(numeric_only=True))                            # variance = spread of values
+print("Standard Deviation:")
+print(iris.std(numeric_only=True))
+print("Max:")
+print(iris.max(numeric_only=True))
+print("Min:")
+print(iris.min(numeric_only=True))
+print("Describe (full summary):")
+print(iris.describe())
+
+# Reading data from the web (needs internet)
+url = "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
+try:
+    iris_web = pd.read_csv(url)                               # read CSV directly from the web
+    print("Iris data from web (first 5 rows):")
+    print(iris_web.head())
+except Exception as e:
+    print("Note: Web read requires internet. Error:", e)
+
+# Task 1: Count occurrences of each value in species column
+print(iris['species'].value_counts())
+
+# Task 2: Calculate mean of petal length column
+print(iris['petal length (cm)'].mean())

@@ -1,0 +1,24 @@
+import pandas as pd
+from sklearn.datasets import load_diabetes
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+
+# Data set 1: UCI diabetes (built-in), Data set 2: Pima Indians diabetes
+uci = load_diabetes(as_frame=True).frame                      # UCI data as a table
+pima = pd.read_csv('data/diabetes.csv')
+
+# Univariate, bivariate and regression results for one data set
+def analyse(x, y):
+    model = LinearRegression().fit(x.to_frame(), y)           # linear model for this data set
+    # Task 1: Added 'Mean of BMI': x.mean() as the first item inside return {
+    return {'Mean of BMI': x.mean(),
+            'Skewness of BMI': x.skew(),                      # univariate result
+            'Kurtosis of BMI': x.kurt(),
+            'Correlation (BMI, target)': x.corr(y),           # bivariate result
+            'R2 score (linear model)': r2_score(y, model.predict(x.to_frame()))}  # regression result
+
+# Compare the two data sets side by side
+result = pd.DataFrame({'UCI (target: progression)': analyse(uci['bmi'], uci['target']),
+                       'Pima (target: Glucose)': analyse(pima['BMI'], pima['Glucose'])})
+# Task 2: Changed round(3) to round(2)
+print(result.round(2))                                        # both data sets side by side rounded to 2 decimal places

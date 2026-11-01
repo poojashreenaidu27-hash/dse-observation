@@ -1,0 +1,40 @@
+import numpy as np
+
+# Array from a list and from a tuple
+a = np.array([1, 2, 3, 4])
+b = np.array((5, 6, 7, 8))                                  # array from a tuple ( )
+print("From list :", a)
+print("From tuple:", b)
+
+# Arithmetic operations and transpose
+print("a + b =", a + b)
+print("a - b =", a - b)
+print("a * b =", a * b)
+print("b / a =", b / a)
+m = np.array([[1, 2, 3], [4, 5, 6]])
+print("Transpose:")
+print(m.T)                                                  # .T = transpose (rows become columns)
+
+# Centigrade to Fahrenheit and back
+# Task 1: Changed [0, 25, 37, 100] to [10, 20, 30, 40]
+c = np.array([10, 20, 30, 40])
+f = c * 9 / 5 + 32                                          # F = C x 9/5 + 32 for every value
+print("Fahrenheit:", f)
+print("Centigrade:", (f - 32) * 5 / 9)
+
+# Real and imaginary parts of complex numbers
+z = np.array([1 + 2j, 3 - 4j])
+print("Real:", z.real, " Imaginary:", z.imag)               # .real and .imag parts
+
+# 3-dimensional array
+# Task 2: Changed ndmin=5 to ndmin=3
+d = np.array([1, 2, 3], ndmin=3)                            # ndmin = minimum dimensions
+print("Dimensions:", d.ndim)
+
+# Sort a boolean array
+t = np.array([True, False, True, False])
+print("Sorted boolean:", np.sort(t))                        # False comes before True
+
+# Save an array to a CSV file
+np.savetxt('data/numbers.csv', m, delimiter=',', fmt='%d')  # save array to CSV file
+print("Saved to data/numbers.csv")

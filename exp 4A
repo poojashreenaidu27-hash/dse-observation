@@ -1,0 +1,17 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+
+
+x = np.linspace(mu - 4*sigma, mu + 4*sigma, 200)    # 200 x values around the mean
+y = norm.pdf(x, mu, sigma)                          # height of the normal curve
+
+plt.figure(figsize=(8, 5))
+plt.plot(x, y, color='blue', linewidth=2, label=f'N(mu={mu}, sigma={sigma})')
+
+# Task 2: Changed 'skyblue' to 'lightgreen'
+plt.fill_between(x, y, color='lightgreen', alpha=0.4)  # shade area under the curve
+
+plt.title('Normal Distribution Curve')
+plt.xlabel('X'); plt.ylabel('Probability Density')
+plt.grid(True); plt.legend(); plt.show()

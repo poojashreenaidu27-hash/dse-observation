@@ -1,0 +1,57 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from statsmodels.tsa.arima.model import ARIMA
+
+# Create monthly date range and airline passenger dataset
+dates = pd.date_range(start='2020-01-01', periods=48, freq='MS')
+passengers = [112,118,132,129,121,135,148,148,136,119,104,118,
+              115,126,141,135,125,149,170,170,158,133,114,140,
+              145,150,178,163,172,178,199,199,184,162,146,166,
+              171,180,193,181,183,218,230,242,209,191,172,194]
+
+df = pd.DataFrame({'Date': dates, 'Passengers': passengers})
+df.set_index('Date', inplace=True)
+df.index.freq = 'MS'                                      # MS = month start frequency
+
+print("First 5 rows:")
+print(df.head())
+
+# Plot original time series
+plt.figure(figsize=(10, 5))
+plt.plot(df.index, df['Passengers'], color='blue', marker='o', label='Original')
+plt.title('Monthly Airline Passengers')
+plt.xlabel('Date'); plt.ylabel('Passengers')
+plt.grid(True); plt.legend(); plt.show()
+
+# Compute 12-month moving average
+df['MA_12'] = df['Passengers'].rolling(window=12).mean()  # 12-month moving average
+
+# Plot original vs 12-Month Moving Average
+plt.figure(figsize=(10, 5))
+plt.plot(df.index, df['Passengers'], color='blue', marker='o', label='Original')
+plt.plot(df.index, df['MA_12'], color='red', linewidth=2.5, label='12-Month MA')
+plt.title('Original vs Moving Average')
+plt.grid(True); plt.legend(); plt.show()
+
+# Fit ARIMA(1, 1, 1) model
+model = ARIMA(df['Passengers'], order=(1, 1, 1))         # ARIMA(p, d, q) model
+fitted = model.fit()
+print(fitted.summary())
+
+# Forecast next 12 months
+forecast = fitted.forecast(steps=12)                      # predict next 12 months
+forecast_index = pd.date_range(start=df.index[-1] + pd.DateOffset(months=1),
+                               periods=12, freq='MS')
+
+# Plot ARIMA forecast along with historical data
+plt.figure(figsize=(10, 5))
+plt.plot(df.index, df['Passengers'], color='blue', marker='o', label='Historical')
+plt.plot(forecast_index, forecast, color='green', marker='s', linewidth=2.5, label='Forecast')
+plt.title('ARIMA Forecast - Airline Passengers')
+plt.grid(True); plt.legend(); plt.show()
+
+# Print forecasted values
+print("Forecasted values (next 12 months):")
+for d, v in zip(forecast_index, forecast):
+    print(f"  {d.strftime('%Y-%m')} : {v:.2f}")

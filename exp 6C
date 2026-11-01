@@ -1,0 +1,29 @@
+import pandas as pd
+import plotly.express as px
+import plotly.io as pio
+from IPython.display import display, HTML
+pio.renderers.default = "notebook"
+
+# Load the map outline from the data folder (so no internet is needed)
+asia_topo = open('data/asia_110m.json').read()
+display(HTML("<script>window.PlotlyGeoAssets = window.PlotlyGeoAssets || {topojson: {}};" +
+             "PlotlyGeoAssets.topojson['asia_110m'] = " + asia_topo + ";" + "</script>"))
+
+district_data = pd.DataFrame({
+    'District' : ['Chennai','Mumbai','Kolkata','Delhi','Bangalore',
+                  'Hyderabad','Ahmedabad','Pune','Jaipur','Lucknow'],
+    'Latitude' : [13.08,19.08,22.57,28.70,12.97,17.38,23.03,18.52,26.91,26.85],
+    'Longitude': [80.27,72.88,88.36,77.10,77.59,78.49,72.58,73.86,75.79,80.95],
+    'Rainfall' : [1400,2200,1600,790,970,810,800,720,650,1010]
+})
+
+fig3 = px.scatter_geo(district_data, lat='Latitude', lon='Longitude',  # circle at each district
+                      size='Rainfall', color='Rainfall', hover_name='District',  # bigger circle = more rainfall
+                      # Task 2: Changed 'Greens' to 'Reds'
+                      color_continuous_scale='Reds', projection='natural earth',
+                      # Task 1: Changed size_max=30 to size_max=50
+                      title='India District-wise Rainfall (mm/year)', size_max=50)
+
+fig3.update_geos(scope='asia', showcountries=True)            # show Asia map
+fig3.update_layout(width=900, height=650)
+fig3.show()

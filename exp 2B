@@ -1,0 +1,19 @@
+import pandas as pd
+
+df = pd.read_excel('data/mark.xlsx')  # read Excel file into a table
+print("Excel data:")
+print(df)
+
+print("First 3 rows:")
+print(df.head(3))
+
+print("Describe:")
+print(df.describe())                  # summary of number columns
+
+print("Column names:", list(df.columns))
+
+# Task 1: Display last 3 rows using tail(3)
+print(df.tail(3))
+
+# Task 2: Display highest CGPA using max()
+print("Highest CGPA:", df['CGPA'].max())

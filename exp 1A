@@ -1,0 +1,26 @@
+import numpy as np
+
+# Create 1D and 2D arrays
+# Task 1: Changed array elements to [2, 4, 6, 8, 10]
+a = np.array([2, 4, 6, 8, 10])
+b = np.array([[1, 2, 3], [4, 5, 6]])  # 2-D array: 2 rows, 3 columns
+
+print("1D array:", a)
+print("2D array:")
+print(b)
+print("Shape of b:", b.shape)         # shape = (rows, columns)
+print("Dimensions of b:", b.ndim)     # ndim = number of dimensions
+
+# Aggregation functions
+print("Sum of a:", a.sum())
+print("Mean of a:", a.mean())
+print("Max of b:", b.max())
+print("Min of b:", b.min())
+
+# Element-wise operations
+print("a + 10 =", a + 10)             # adds to every element, no loop
+print("a * 2 =", a * 2)
+print("a squared =", a ** 2)
+
+# Task 2: Added product of array 'a'
+print("Product of a:", a.prod())

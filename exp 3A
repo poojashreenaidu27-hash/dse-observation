@@ -1,0 +1,33 @@
+import pandas as pd
+from scipy.stats import kurtosis
+
+df = pd.read_csv('data/diabetes.csv')
+print("First 5 rows:")
+print(df.head())
+
+df1 = pd.DataFrame(df, columns=['Age', 'Glucose'])   # keep only two columns
+
+print("Mean:")
+print(df1.mean())
+print("Median:")
+print(df1.median())
+print("Mode:")
+print(df1.mode().iloc[0])                            # most frequent value (first row)
+print("Variance:")
+print(df1.var())
+print("Standard Deviation:")
+print(df1.std())
+print("Skewness:")
+print(df1.skew())                                   # skewness = how one-sided the data is
+print("Kurtosis:")
+print("Age     :", kurtosis(df1['Age'], bias=True))  # kurtosis = peakedness of data
+print("Glucose :", kurtosis(df1['Glucose'], bias=True))
+
+print("Frequency of Age (top 5):")
+print(df1['Age'].value_counts().head(5))             # frequency of each value
+
+# Task 1: Display maximum Age
+print("Maximum Age:", df1['Age'].max())
+
+# Task 2: Display minimum Age
+print("Minimum Age:", df1['Age'].min())

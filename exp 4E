@@ -1,0 +1,22 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+data = pd.read_csv('data/diabetes.csv')
+
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_subplot(111, projection='3d')           # 3-D axes
+
+x = data['Age'].values
+y = data['Glucose'].values
+z = data['Outcome'].values
+
+ax.set_xlabel("Age (Year)")
+ax.set_ylabel("Glucose (Reading)")
+ax.set_zlabel("Outcome (0 or 1)")
+ax.set_title("3D Scatter - Diabetes Dataset")
+
+# Task 1 & Task 2: Changed marker='o' to marker='^' and c='red' to c='blue'
+ax.scatter(x, y, z, c='blue', marker='^', alpha=0.6)  # 3-D scatter with blue triangles
+plt.show()

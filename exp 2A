@@ -1,0 +1,20 @@
+# Read the whole file
+file1 = open('data/myfile.txt', 'r')  # 'r' = open for reading
+print("Output of read():")
+print(file1.read())                   # whole file as one string
+file1.close()
+
+# Read line by line
+file2 = open('data/myfile.txt', 'r')
+print("Output of readline():")
+print(file2.readline())               # only one line
+# Task 2: Copied print(file2.readline()) just below
+print(file2.readline())               # reads the second line
+file2.close()
+
+# Read into list
+file3 = open('data/myfile.txt', 'r')
+print("Output of readlines():")
+# Task 1: Changed print(file3.readlines()) to print(len(file3.readlines()))
+print(len(file3.readlines()))         # prints total number of lines
+file3.close()

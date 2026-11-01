@@ -1,0 +1,27 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Sample sales data (what Power BI dashboard displays)
+# Task 2: Changed Grocery sales from 320000 to 400000
+sales = pd.DataFrame({
+    'Category': ['Electronics', 'Clothing', 'Grocery', 'Furniture', 'Books'],
+    'Sales'   : [250000, 180000, 400000, 140000,  90000],
+    'Profit'  : [ 45000,  30000,  60000,  22000,  18000]
+})
+print("Sample Sales Data (SuperMart Stores):")
+print(sales)
+
+# Bar chart - Sales by Category
+plt.figure(figsize=(9, 5))
+# Task 1: Changed color='steelblue' to color='orange'
+plt.bar(sales['Category'], sales['Sales'], color='orange', edgecolor='black')  # bar chart like Power BI
+plt.title('Sales by Category (Power BI style)')
+plt.xlabel('Category'); plt.ylabel('Sales (Rupees)')
+plt.grid(True, axis='y'); plt.show()
+
+# Donut chart - Profit Share
+plt.figure(figsize=(7, 7))
+plt.pie(sales['Profit'], labels=sales['Category'], autopct='%1.1f%%',
+        wedgeprops=dict(width=0.4))                                           # ring width makes it a donut
+plt.title('Profit Share by Category (Donut Chart)')
+plt.show()

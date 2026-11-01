@@ -1,0 +1,30 @@
+import json
+import pandas as pd
+import plotly.express as px
+import plotly.io as pio
+from IPython.display import display, HTML
+pio.renderers.default = "notebook"
+
+# Load the map outline from the data folder (so no internet is needed)
+world_topo = open('data/world_110m.json').read()
+display(HTML("<script>window.PlotlyGeoAssets = window.PlotlyGeoAssets || {topojson: {}};" +
+             "PlotlyGeoAssets.topojson['world_110m'] = " + world_topo + ";" + "</script>"))
+india_geojson = json.load(open('data/india_state.geojson'))   # India state borders file
+
+# Task 2: Changed Kerala's literacy rate from 94.0 to 96.2
+india_states = pd.DataFrame({
+    'State': ['Kerala','Tamil Nadu','Maharashtra','Karnataka','Delhi',
+              'Punjab','West Bengal','Gujarat','Odisha','Bihar'],
+    'LiteracyRate': [96.2, 80.1, 82.3, 75.4, 86.2, 75.8, 76.3, 78.0, 72.9, 61.8]
+})
+
+# Task 1: Changed 'Blues' to 'Greens'
+fig2 = px.choropleth(india_states, geojson=india_geojson,
+                     locations='State', featureidkey='properties.NAME_1',  # match state name with map
+                     color='LiteracyRate', hover_name='State',
+                     color_continuous_scale='Greens',
+                     title='India State-wise Literacy Rate (%)')
+
+fig2.update_geos(fitbounds='locations', visible=False)        # zoom to India only
+fig2.update_layout(width=850, height=700)
+fig2.show()

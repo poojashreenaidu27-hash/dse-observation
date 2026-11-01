@@ -1,0 +1,31 @@
+%matplotlib inline
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import datasets, linear_model
+from sklearn.metrics import mean_squared_error, r2_score
+
+diabetes_X, diabetes_y = datasets.load_diabetes(return_X_y=True)  # built-in UCI diabetes data
+diabetes_X = diabetes_X[:, np.newaxis, 2]                     # take only column 2 (BMI)
+
+diabetes_X_train = diabetes_X[:-20]                           # all rows except last 20: training
+diabetes_X_test  = diabetes_X[-20:]                           # last 20 rows: testing
+diabetes_y_train = diabetes_y[:-20]
+diabetes_y_test  = diabetes_y[-20:]
+
+regr = linear_model.LinearRegression()
+regr.fit(diabetes_X_train, diabetes_y_train)                  # train the model
+y_pred = regr.predict(diabetes_X_test)                        # predict for test data
+
+print("Coefficient:", regr.coef_)                             # slope of the line
+print("Mean squared error: %.2f" % mean_squared_error(diabetes_y_test, y_pred))
+print("Coefficient of determination (R²): %.2f" % r2_score(diabetes_y_test, y_pred))  # R² near 1 = good fit
+
+plt.scatter(diabetes_X_test, diabetes_y_test, color='black', label='Actual')
+# Task 1: Changed color='red' to color='blue'
+plt.plot(diabetes_X_test, y_pred, color='blue', linewidth=3, label='Predicted')
+plt.xlabel('BMI (scaled)'); plt.ylabel('Disease progression')
+plt.title('Linear Regression - Diabetes Dataset')
+plt.legend(); plt.grid(True); plt.show()
+
+# Task 2: Display intercept of the linear model
+print("Intercept:", regr.intercept_)

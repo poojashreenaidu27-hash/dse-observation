@@ -1,0 +1,26 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy import stats
+
+con = pd.read_csv('data/diabetes.csv')
+
+# Scatter plot
+plt.figure(figsize=(7, 5))
+sns.scatterplot(x="Pregnancies", y="Age", data=con)           # one dot per patient
+plt.title('Scatter: Pregnancies vs Age'); plt.show()
+
+# Regression scatter plot
+sns.lmplot(x="Pregnancies", y="Age", data=con, height=4, aspect=1.4)  # scatter with regression line
+plt.title('Regression Scatter'); plt.show()
+
+# Pearson correlation coefficient
+r = stats.pearsonr(con['Age'], con['Outcome'])                # Pearson r between -1 and 1
+print("Pearson coefficient (Age vs Outcome):", r)
+
+# Correlation heatmap
+cormat = con.corr()                                           # correlation of every pair of columns
+plt.figure(figsize=(8, 6))
+# Task 1 & Task 2: Changed cmap='coolwarm' to cmap='Greens' and annot=True to annot=False
+sns.heatmap(round(cormat, 2), annot=False, cmap='Greens')     # color box for each correlation
+plt.title('Correlation Heatmap'); plt.show()

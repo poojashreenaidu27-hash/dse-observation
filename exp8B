@@ -1,0 +1,54 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+
+# Sample dataset
+data = {
+    'Age'       : [22, 25, 47, 52, 46, 56, 35, 28, 60, 40],
+    'Salary'    : [25000, 30000, 85000, 95000, 80000, 100000, 55000, 32000, 110000, 60000],
+    'Experience': [1, 2, 15, 20, 14, 25, 10, 3, 30, 12],
+    'Education' : ['School','UG','PG','PhD','PG','PhD','UG','School','PhD','PG'],
+    'City'      : ['Chennai','Mumbai','Delhi','Chennai','Bangalore',
+                   'Mumbai','Chennai','Delhi','Bangalore','Mumbai']
+}
+df = pd.DataFrame(data)
+print("Original Data:")
+print(df)
+
+# Feature Scaling - Standard Scaler
+numeric_cols = ['Age', 'Salary', 'Experience']
+df_std = pd.DataFrame(StandardScaler().fit_transform(df[numeric_cols]),  # mean 0, std 1
+                      columns=[c + '_std' for c in numeric_cols])
+print("\nStandardScaled Data (mean=0, std=1):")
+print(df_std.round(2))
+
+# Feature Scaling - MinMax Scaler
+df_mm = pd.DataFrame(MinMaxScaler().fit_transform(df[numeric_cols]),    # range 0 to 1
+                     columns=[c + '_mm' for c in numeric_cols])
+print("\nMinMaxScaled Data (range 0 to 1):")
+print(df_mm.round(2))
+
+# Categorical Encoding - Label Encoding
+df['Education_Encoded'] = LabelEncoder().fit_transform(df['Education'])  # text to numbers 0, 1, 2 ...
+print("\nLabel Encoded Education:")
+print(df[['Education', 'Education_Encoded']])
+
+# Categorical Encoding - One-Hot Encoding
+df_onehot = pd.get_dummies(df['City'], prefix='City').astype(int)        # one 0/1 column per city
+print("\nOne-Hot Encoded City:")
+print(df_onehot)
+
+# Plotting histograms comparing original vs scaled features
+fig, axes = plt.subplots(1, 3, figsize=(14, 4))
+axes[0].hist(df['Salary'], color='red', edgecolor='black', bins=5)
+axes[0].set_title('Original Salary'); axes[0].grid(True)
+
+axes[1].hist(df_std['Salary_std'], color='green', edgecolor='black', bins=5)
+axes[1].set_title('StandardScaled'); axes[1].grid(True)
+
+axes[2].hist(df_mm['Salary_mm'], color='blue', edgecolor='black', bins=5)
+axes[2].set_title('MinMaxScaled'); axes[2].grid(True)
+
+plt.tight_layout()
+plt.show()
